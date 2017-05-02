@@ -1,0 +1,22 @@
+{
+  "name": "rz-workflow-foundation",
+  "version": "0.1.0",
+  "description": "general purpose workflow framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gihub.com/tributus/RZWorkflowFoundation.git"
+  },
+  "keywords": [
+    "workflow",
+    "task",
+    "machine",
+    "state",
+    "transition"
+  ],
+  "author": "Anderson Norberto Santos <anderson.norberto@gmail.com> (https://github.com/tributus)",
+  "license": "MIT"
+}
