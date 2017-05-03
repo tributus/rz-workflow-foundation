@@ -13,6 +13,9 @@ var setupEventHandlers = function(tr1){
             c("DONE");
         }
     });
+    tr1.on("workflow-finished",function(){
+        console.error("Workflow Finished");
+    })
 
 }
 
@@ -27,6 +30,7 @@ var start = function(){
     //taskrunner mode
     tr1.workflow("default",["say-hello","set-context","get-context","say-good-bye"]);
     tr1.start("default");
+    
 
 }
 

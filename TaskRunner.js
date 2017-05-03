@@ -46,7 +46,8 @@ module.exports={
             if(context.currentStep < workflow.length){
                 executeTask(workflow,context.currentStep,previousStep);
             }
-            else{
+            if(context.currentStep==workflow.length && !context.isWorkflowFinished){
+                context.isWorkflowFinished=true;
                 finishWorkflowExecution();
             }
         }
@@ -73,6 +74,7 @@ module.exports={
             if(workflow){
                 context.runningWorkflowName=workflowName;
                 context.currentStep=0;
+                context.isWorkflowFinished=false;
                 raiseEvent("workflow-started",{context:context});
                 executeTask(workflow,0);
             }
