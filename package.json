@@ -1,6 +1,6 @@
 {
   "name": "rz-workflow-foundation",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "general purpose workflow framework",
   "main": "index.js",
   "scripts": {
