@@ -9,6 +9,7 @@ module.exports = {
     },
     setContext: function(container,done,signal){
         container.setVar("Foo","BAH");
+        container.setVar("Obj",{v1:"x",v2:"y"});
         signal("context-changed",{},function(cbdata){
             console.log("SIGNAL CALLBACK")
         });

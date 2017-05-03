@@ -44,7 +44,10 @@ module.exports={
             context.currentStep++;
             
             if(context.currentStep < workflow.length){
-                executeTask(workflow,context.currentStep,previousStep);
+                setTimeout(function(){
+                    return executeTask(workflow,context.currentStep,previousStep);
+                },1);
+                
             }
             if(context.currentStep==workflow.length && !context.isWorkflowFinished){
                 context.isWorkflowFinished=true;

@@ -30,7 +30,8 @@ var start = function(){
     //taskrunner mode
     tr1.workflow("default",["say-hello","set-context","get-context","say-good-bye"]);
     tr1.start("default");
-    
+    var r = tr1.getVar("Obj");
+    console.log(r);
 
 }
 
