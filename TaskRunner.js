@@ -3,6 +3,7 @@ module.exports={
         var tasks={};
         var context={};
         var workflows={};
+        var executionLog=[];
         var eventHandlers={
             "task-started":[],
             "task-finished":[],
@@ -31,18 +32,27 @@ module.exports={
             }
         }
 
+        var registerTaskExecutionLog = function(data){
+            executionLog.push(data);
+        }
+
+/**
+ * handle stepDone actions
+ * @param {int} status exit code of execution (0 to indicate success or an arbitrary error code)
+ * @param {*} stepData additional data produced by step execution
+ */
         var stepDone = function(status,stepData){
             var workflow = workflows[context.runningWorkflowName];
-
             var previousStep = {
                 taskName: workflow[context.currentStep],
                 step: context.currentStep,
-                status: status || "0",
+                status: status || 0,
                 stepData:stepData
             }
+            registerTaskExecutionLog(previousStep);
             raiseEvent("task-finished",previousStep);
             context.currentStep++;
-            
+        
             if(context.currentStep < workflow.length){
                 setTimeout(function(){
                     return executeTask(workflow,context.currentStep,previousStep);
@@ -61,23 +71,41 @@ module.exports={
 
         this.task = function(taskName,handler){
             tasks[taskName]=handler;
-            
-        }
+       }
         this.workflow = function(workflowName,workflowHandler){
             workflows[workflowName]=workflowHandler
         }
+
+        //workflow data handling
         this.setVar = function(varName,value){
             context[varName]=value;
         }
         this.getVar = function(varName){
             return context[varName];
         }
+
+        this.getExecutionLog = function(){
+            return executionLog;
+        }
+
+        //workflow execution
+        reset = function(){
+            context.currentStep=0;
+            executionLog=[];
+            context.isWorkflowFinished=false;
+        }
+
+
+        /**
+         * Starts a predefined workflow
+         * @param {*} workflow name ("default" if not defined)
+         */
         this.start = function(workflowName){
+            workflowName = workflowName || "default";
             var workflow = workflows[workflowName];
             if(workflow){
                 context.runningWorkflowName=workflowName;
-                context.currentStep=0;
-                context.isWorkflowFinished=false;
+                reset();
                 raiseEvent("workflow-started",{context:context});
                 executeTask(workflow,0);
             }
