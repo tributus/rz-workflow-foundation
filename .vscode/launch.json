@@ -10,6 +10,12 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceRoot}/examples/example1.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Example 2",
+            "program": "${workspaceRoot}/examples/example2.js"
         }
     
     ]

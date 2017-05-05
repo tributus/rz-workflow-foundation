@@ -18,5 +18,16 @@ module.exports = {
     getContext: function(container,done){
         console.log("The value of FOO is ",container.getVar("Foo"));
         done();
+    },
+    SomethingElse:function(container,done){
+        console.log("Something else");
+        done();
+    },
+    asyncTask:function(container,done){
+        setTimeout(function(){
+            console.log("Executed after 5s");
+            done();
+        },5000);
     }
+
 }
