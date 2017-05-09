@@ -8,7 +8,8 @@ module.exports={
             "task-started":[],
             "task-finished":[],
             "workflow-started":[],
-            "workflow-finished":[]
+            "workflow-finished":[],
+            "workflow-stoped":[]
         };
         var signals={};
         var $this = this;
@@ -51,18 +52,24 @@ module.exports={
             }
             registerTaskExecutionLog(previousStep);
             raiseEvent("task-finished",previousStep);
-            context.currentStep++;
-        
-            if(context.currentStep < workflow.length){
-                setTimeout(function(){
-                    return executeTask(workflow,context.currentStep,previousStep);
-                },1);
-                
+            if(status!=255){
+                context.currentStep++;
+                if(context.currentStep < workflow.length){
+                    setTimeout(function(){
+                        return executeTask(workflow,context.currentStep,previousStep);
+                    },1);
+                    
+                }
+                if(context.currentStep==workflow.length && !context.isWorkflowFinished){
+                    context.isWorkflowFinished=true;
+                    finishWorkflowExecution();
+                }
             }
-            if(context.currentStep==workflow.length && !context.isWorkflowFinished){
-                context.isWorkflowFinished=true;
+            else{
+                raiseEvent("workflow-stoped",{status:255,context:context});
                 finishWorkflowExecution();
             }
+            
         }
 
         var finishWorkflowExecution = function(){

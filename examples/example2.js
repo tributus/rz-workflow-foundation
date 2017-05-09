@@ -1,6 +1,5 @@
 var wff = require('../index');
 
-
 var start = function(){
     var re = new wff.RulesEngine();
     var obj = {
@@ -16,7 +15,7 @@ var start = function(){
         }
     });
 
-    re.when("is ok",obj,function(){
+    re.when("is ok",obj,function(obj){
         console.log("Matched !!!");
     });
 }
