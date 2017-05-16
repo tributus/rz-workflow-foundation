@@ -16,7 +16,7 @@ module.exports={
         
         var executeTask = function(workFlow,step,previousStep){
             var transition = workFlow[step];
-            console.log("Executing transition: " + transition);
+            //console.log("Executing transition: " + transition);
             if(transition && typeof transition=="string"){
                 //implicit transition
                 var task = tasks[transition];
